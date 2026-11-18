@@ -27,28 +27,33 @@ import com.example.diceroler.ui.theme.DiceRolerTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            DiceRolerTheme {
-                DiceRollerApp()
+
+        setContent {        // Define la interfaz de la aplicación.
+            DiceRolerTheme {        // Aplica el tema visual.
+                DiceRollerApp()     // Llama a nuestra pantalla principal.
             }
         }
     }
 }
 
-@Preview
-@Composable
+@Preview    // Permite visualizar la aplicación.
+@Composable     // Define la interfaz principal.
 fun DiceRollerApp() {
-    DiceWithButtonAndImage(
+    DiceWithButtonAndImage(    // Muestra el contenido del dado.
         modifier = Modifier
-            .fillMaxSize()
-            .wrapContentSize(Alignment.Center)
+            .fillMaxSize()      // Ocupa toda la pantalla.
+            .wrapContentSize(Alignment.Center)      // Centra el contenido.
     )
 }
 
-@Composable
-fun DiceWithButtonAndImage(modifier: Modifier = Modifier) {
+@Composable     // Función que contendrá el dado y el botón.
+fun DiceWithButtonAndImage(
+    modifier: Modifier = Modifier) {     // Recibe un modificador opcional.
+
+    // Guarda el resultado y permite actualizar la interfaz.
     var result by remember { mutableStateOf(1) }
 
+    // Selecciona la imagen correspondiente al resultado.
     val imageResource = when (result) {
         1 -> R.drawable.dice_1
         2 -> R.drawable.dice_2
@@ -59,22 +64,22 @@ fun DiceWithButtonAndImage(modifier: Modifier = Modifier) {
     }
 
     Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = modifier,    // Aplica el tamaño y centrado definido
+        horizontalAlignment = Alignment.CenterHorizontally    // Centra los elementos horizontalmente.
     ) {
         Image(
-            painter = painterResource(imageResource),
-            contentDescription = result.toString()
+            painter = painterResource(imageResource),   // Imagen dinámica.
+            contentDescription = result.toString()  // Número del dado.
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(16.dp))   // Separa el dado del botón.
 
         Button(
             onClick = {
-                result = (1..6).random()
+                result = (1..6).random()    // Genera un número entre 1 y 6.
             }
         ) {
-            Text(stringResource(R.string.roll))
+            Text(stringResource(R.string.roll))    // Obtiene el texto "Roll".
         }
     }
 }
